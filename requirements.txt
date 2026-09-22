@@ -1,0 +1,7 @@
+flask>=3.0
+numpy>=1.26
+opencv-python-headless>=4.9
+# Needed to load your trained YOLO weights (the app still runs in demo mode without it)
+ultralytics>=8.2
+# Only for running the tests
+pytest>=8.0

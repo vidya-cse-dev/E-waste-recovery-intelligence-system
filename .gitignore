@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+data/records.db
+data/uploads/*
+data/annotated/*
+models/*.pt
+!data/.gitkeep

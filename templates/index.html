@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}E-Waste Recovery Intelligence{% endblock %}
+{% block content %}
+<section class="intro">
+      <div class="intro__copy">
+    <h1>♻️ E-Waste Recovery Intelligence</h1>
+    <p class="intro__subtitle">AI-Based Electronic Component Detection &amp; Recovery Decision System</p>
+    <p>Turn your electronic waste into valuable resources. Upload an image of an electronic component, and our AI will identify it, check for visible damage, and guide you toward the right recovery option—reuse, repair, or recycle.</p>
+  </div>
+
+  <div class="drop" id="drop">
+    <input type="file" id="fileInput" accept="image/*" class="sr-only" aria-label="Component photo">
+    <label for="fileInput" class="drop__target" id="dropTarget">
+      <img id="previewImg" alt="Preview of the chosen photo" hidden>
+      <span class="drop__prompt" id="dropPrompt">
+        <strong>Drop a photo here</strong>
+        <span>or click to choose one (JPG, PNG or WEBP, up to 10 MB)</span>
+      </span>
+    </label>
+    <div class="drop__controls">
+      <label class="field">
+        <span>Component type</span>
+        <select id="componentSelect">
+          <option value="">Detect automatically</option>
+        </select>
+      </label>
+      <button type="button" class="btn" id="analyseBtn" disabled>Analyse photo</button>
+    </div>
+    <p class="message" id="message" role="alert" hidden></p>
+  </div>
+</section>
+
+<section class="result" id="result" hidden aria-live="polite">
+  <figure class="specimen">
+    <img id="annotated" alt="Your photo with the detected component outlined">
+    <figcaption id="detList"></figcaption>
+  </figure>
+
+  <ol class="steps">
+    <li class="step" id="stepIdentify">
+      <h2>Identified</h2>
+      <p class="step__lead" id="identifyLead"></p>
+      <p class="step__meta" id="identifyMeta"></p>
+    </li>
+    <li class="step" id="stepInspect">
+      <h2>Inspected</h2>
+      <p class="step__lead" id="inspectLead"></p>
+      <ul class="findings" id="findings"></ul>
+      <p class="step__meta" id="inspectMeta"></p>
+    </li>
+    <li class="step" id="stepQuestions" hidden>
+      <h2>A few quick questions</h2>
+      <p class="step__lead" id="askWhy"></p>
+      <form id="questionsForm" novalidate></form>
+    </li>
+    <li class="step step--verdict" id="stepVerdict" hidden>
+      <h2 class="sr-only">Recommendation</h2>
+      <article class="tag" id="tag"></article>
+      <div class="verdict__actions">
+        <button type="button" class="btn btn--ghost" id="refineBtn">Answer a few questions to refine this</button>
+        <button type="button" class="btn btn--ghost" id="againBtn">Analyse another photo</button>
+      </div>
+    </li>
+  </ol>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/app.js') }}"></script>{% endblock %}

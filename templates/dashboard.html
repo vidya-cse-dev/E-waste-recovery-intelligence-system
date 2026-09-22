@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | E-Waste Recovery Intelligence{% endblock %}
+{% block content %}
+<section class="dash">
+  <div class="dash__head">
+    <h1>Recovery dashboard</h1>
+    <a class="btn btn--ghost" href="{{ url_for('export_csv') }}">Download CSV for Power BI</a>
+  </div>
+  <p class="notice" id="sampleNote" hidden></p>
+
+  <div class="kpis" id="kpis">
+    <div class="kpi"><span class="kpi__value" id="kTotal">0</span><span class="kpi__label">Components analysed</span></div>
+    <div class="kpi"><span class="kpi__value" id="kValue">₹0</span><span class="kpi__label">Estimated recovery value</span></div>
+    <div class="kpi"><span class="kpi__value" id="kReuse">0%</span><span class="kpi__label">Potentially reusable</span></div>
+    <div class="kpi"><span class="kpi__value" id="kCert">0%</span><span class="kpi__label">Average certainty</span></div>
+  </div>
+
+  <p class="empty" id="empty" hidden>Nothing has been analysed yet. <a href="{{ url_for('index') }}">Analyse a part</a> or run <code>python seed_data.py --insert</code> to load sample records.</p>
+
+  <div class="charts" id="charts">
+    <figure class="chart"><figcaption>Components detected</figcaption><div class="chart__box"><canvas id="cComponent" role="img" aria-label="Bar chart of components detected"></canvas></div></figure>
+    <figure class="chart"><figcaption>Visible condition</figcaption><div class="chart__box"><canvas id="cCondition" role="img" aria-label="Bar chart of visible condition"></canvas></div></figure>
+    <figure class="chart"><figcaption>Recovery decisions</figcaption><div class="chart__box"><canvas id="cDecision" role="img" aria-label="Doughnut chart of recovery decisions"></canvas></div></figure>
+    <figure class="chart"><figcaption>Estimated value by component (₹)</figcaption><div class="chart__box"><canvas id="cValue" role="img" aria-label="Bar chart of estimated value by component"></canvas></div></figure>
+  </div>
+
+  <h2 class="table__title">Latest analyses</h2>
+  <div class="table__wrap">
+    <table class="table">
+      <thead><tr><th>#</th><th>Date</th><th>Component</th><th>Condition</th><th>Decision</th><th class="num">Value</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
